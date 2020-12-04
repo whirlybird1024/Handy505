@@ -1,0 +1,45 @@
+#scrubs useless data and adds data to csv files
+class dataCleaner():
+    def __init__(self):
+        self.lines = {}
+        
+        with open('csv\\pokemon_species_flavor_text.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                for column, value in row.iteritems():
+                    self.lines.setdefault(column, []).append(value)
+                    
+        #for i in range (0,len(self.lines['pokedex_id'])):
+        i=0
+        while i<len(self.lines['species_id']):
+            #print i
+            try: self.lines['species_id'][i]
+            except: break
+            integ =  int(self.lines['language_id'][i])
+            vers =  int(self.lines['version_id'][i])
+            spec =  int(self.lines['species_id'][i])
+            if(integ != 9 or spec > 151 or vers != 1):
+                del self.lines['species_id'][i]
+                del self.lines['version_id'][i]
+                del self.lines['language_id'][i]
+                del self.lines['flavor_text'][i]
+                #i -= 1
+            else: i+=1
+                
+        
+        headers = ['species_id','flavor_text']
+        print headers
+        self.lines = zip(self.lines['species_id'],
+            self.lines['flavor_text'])
+        #print self.lines
+        with open('csv\\pokemon_species_flavor_text.csv', 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=headers)
+            writer.writeheader()
+            for data in self.lines:
+                temp = {}
+                i=0
+                while i<len(headers):
+                    temp[headers[i]] = data[i]
+                    i+=1
+                print temp
+                writer.writerow(temp)

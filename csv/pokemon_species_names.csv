@@ -1,0 +1,152 @@
+pokemon_species_id,name,genus
+1,Bulbasaur,Seed Pokémon
+2,Ivysaur,Seed Pokémon
+3,Venusaur,Seed Pokémon
+4,Charmander,Lizard Pokémon
+5,Charmeleon,Flame Pokémon
+6,Charizard,Flame Pokémon
+7,Squirtle,Tiny Turtle Pokémon
+8,Wartortle,Turtle Pokémon
+9,Blastoise,Shellfish Pokémon
+10,Caterpie,Worm Pokémon
+11,Metapod,Cocoon Pokémon
+12,Butterfree,Butterfly Pokémon
+13,Weedle,Hairy Bug Pokémon
+14,Kakuna,Cocoon Pokémon
+15,Beedrill,Poison Bee Pokémon
+16,Pidgey,Tiny Bird Pokémon
+17,Pidgeotto,Bird Pokémon
+18,Pidgeot,Bird Pokémon
+19,Rattata,Mouse Pokémon
+20,Raticate,Mouse Pokémon
+21,Spearow,Tiny Bird Pokémon
+22,Fearow,Beak Pokémon
+23,Ekans,Snake Pokémon
+24,Arbok,Cobra Pokémon
+25,Pikachu,Mouse Pokémon
+26,Raichu,Mouse Pokémon
+27,Sandshrew,Mouse Pokémon
+28,Sandslash,Mouse Pokémon
+29,Nidoran♀,Poison Pin Pokémon
+30,Nidorina,Poison Pin Pokémon
+31,Nidoqueen,Drill Pokémon
+32,Nidoran♂,Poison Pin Pokémon
+33,Nidorino,Poison Pin Pokémon
+34,Nidoking,Drill Pokémon
+35,Clefairy,Fairy Pokémon
+36,Clefable,Fairy Pokémon
+37,Vulpix,Fox Pokémon
+38,Ninetales,Fox Pokémon
+39,Jigglypuff,Balloon Pokémon
+40,Wigglytuff,Balloon Pokémon
+41,Zubat,Bat Pokémon
+42,Golbat,Bat Pokémon
+43,Oddish,Weed Pokémon
+44,Gloom,Weed Pokémon
+45,Vileplume,Flower Pokémon
+46,Paras,Mushroom Pokémon
+47,Parasect,Mushroom Pokémon
+48,Venonat,Insect Pokémon
+49,Venomoth,Poison Moth Pokémon
+50,Diglett,Mole Pokémon
+51,Dugtrio,Mole Pokémon
+52,Meowth,Scratch Cat Pokémon
+53,Persian,Classy Cat Pokémon
+54,Psyduck,Duck Pokémon
+55,Golduck,Duck Pokémon
+56,Mankey,Pig Monkey Pokémon
+57,Primeape,Pig Monkey Pokémon
+58,Growlithe,Puppy Pokémon
+59,Arcanine,Legendary Pokémon
+60,Poliwag,Tadpole Pokémon
+61,Poliwhirl,Tadpole Pokémon
+62,Poliwrath,Tadpole Pokémon
+63,Abra,Psi Pokémon
+64,Kadabra,Psi Pokémon
+65,Alakazam,Psi Pokémon
+66,Machop,Superpower Pokémon
+67,Machoke,Superpower Pokémon
+68,Machamp,Superpower Pokémon
+69,Bellsprout,Flower Pokémon
+70,Weepinbell,Flycatcher Pokémon
+71,Victreebel,Flycatcher Pokémon
+72,Tentacool,Jellyfish Pokémon
+73,Tentacruel,Jellyfish Pokémon
+74,Geodude,Rock Pokémon
+75,Graveler,Rock Pokémon
+76,Golem,Megaton Pokémon
+77,Ponyta,Fire Horse Pokémon
+78,Rapidash,Fire Horse Pokémon
+79,Slowpoke,Dopey Pokémon
+80,Slowbro,Hermit Crab Pokémon
+81,Magnemite,Magnet Pokémon
+82,Magneton,Magnet Pokémon
+83,Farfetch’d,Wild Duck Pokémon
+84,Doduo,Twin Bird Pokémon
+85,Dodrio,Triple Bird Pokémon
+86,Seel,Sea Lion Pokémon
+87,Dewgong,Sea Lion Pokémon
+88,Grimer,Sludge Pokémon
+89,Muk,Sludge Pokémon
+90,Shellder,Bivalve Pokémon
+91,Cloyster,Bivalve Pokémon
+92,Gastly,Gas Pokémon
+93,Haunter,Gas Pokémon
+94,Gengar,Shadow Pokémon
+95,Onix,Rock Snake Pokémon
+96,Drowzee,Hypnosis Pokémon
+97,Hypno,Hypnosis Pokémon
+98,Krabby,River Crab Pokémon
+99,Kingler,Pincer Pokémon
+100,Voltorb,Ball Pokémon
+101,Electrode,Ball Pokémon
+102,Exeggcute,Egg Pokémon
+103,Exeggutor,Coconut Pokémon
+104,Cubone,Lonely Pokémon
+105,Marowak,Bone Keeper Pokémon
+106,Hitmonlee,Kicking Pokémon
+107,Hitmonchan,Punching Pokémon
+108,Lickitung,Licking Pokémon
+109,Koffing,Poison Gas Pokémon
+110,Weezing,Poison Gas Pokémon
+111,Rhyhorn,Spikes Pokémon
+112,Rhydon,Drill Pokémon
+113,Chansey,Egg Pokémon
+114,Tangela,Vine Pokémon
+115,Kangaskhan,Parent Pokémon
+116,Horsea,Dragon Pokémon
+117,Seadra,Dragon Pokémon
+118,Goldeen,Goldfish Pokémon
+119,Seaking,Goldfish Pokémon
+120,Staryu,Star Shape Pokémon
+121,Starmie,Mysterious Pokémon
+122,Mr. Mime,Barrier Pokémon
+123,Scyther,Mantis Pokémon
+124,Jynx,Human Shape Pokémon
+125,Electabuzz,Electric Pokémon
+126,Magmar,Spitfire Pokémon
+127,Pinsir,Stag Beetle Pokémon
+128,Tauros,Wild Bull Pokémon
+129,Magikarp,Fish Pokémon
+130,Gyarados,Atrocious Pokémon
+131,Lapras,Transport Pokémon
+132,Ditto,Transform Pokémon
+133,Eevee,Evolution Pokémon
+134,Vaporeon,Bubble Jet Pokémon
+135,Jolteon,Lightning Pokémon
+136,Flareon,Flame Pokémon
+137,Porygon,Virtual Pokémon
+138,Omanyte,Spiral Pokémon
+139,Omastar,Spiral Pokémon
+140,Kabuto,Shellfish Pokémon
+141,Kabutops,Shellfish Pokémon
+142,Aerodactyl,Fossil Pokémon
+143,Snorlax,Sleeping Pokémon
+144,Articuno,Freeze Pokémon
+145,Zapdos,Electric Pokémon
+146,Moltres,Flame Pokémon
+147,Dratini,Dragon Pokémon
+148,Dragonair,Dragon Pokémon
+149,Dragonite,Dragon Pokémon
+150,Mewtwo,Genetic Pokémon
+151,Mew,New Species Pokémon

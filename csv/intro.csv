@@ -1,0 +1,42 @@
+sprite, text
+
+chris-1.png,"Hello there! 
+Welcome to the 
+world of pokémon!" 
+
+chris-1.png, "My name is Chris! 
+People call me 
+the Pokémon Prof!"
+
+chris-1.png, "This world is 
+inhabited by creatures 
+called pokémon! "
+
+chris-1.png, "For some people, 
+pokémon are pets. 
+Others use them 
+for fights. "
+
+chris-1.png, "Myself..."
+
+chris-1.png, "I study pokémon 
+as a profession."
+
+chris-1.png,"Like Duplo here!
+wait, hold on a sec"
+
+chris-2.png,"There, that's better."
+
+chris-2.png, "Now normally I'd ask
+you your name.
+But I don't think that
+is really necessary
+in your case."
+
+"NAME + ".png, "Merry Christmas
+" + NAME + "!"
+
+"NAME + ".png, "Normally I'd give
+you your first pokemon
+But it seems like you
+already brought your own!"
