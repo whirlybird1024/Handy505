@@ -70,19 +70,20 @@ class MainMenu():
             screen.blit(scan, (285,400))
         elif(SCAN):
             scnMes = font.render("Coming soon! ...Hopefully", True, (0, 0, 0))
-            screen.blit(scnMes, (45,230))
+            screen.blit(scnMes, (30,380))
             
-
-        ball = pygame.image.load("pics/menu/pokeballIcon.png")
-        ball = pygame.transform.scale(ball, (25,25))
-        screen.blit(ball, MenuPos.get(MENUPOS, None))
+        if(SCAN == False):
+            ball = pygame.image.load("pics/menu/pokeballIcon.png")
+            ball = pygame.transform.scale(ball, (25,25))
+            screen.blit(ball, MenuPos.get(MENUPOS, None))
 
         
     def inputHandler(self, action):
         global MENUPOS
         global OPTIONS
+        global SCAN
         if(action == "A"):      
-            if(OPTIONS == False and SCAN == false):
+            if(OPTIONS == False and SCAN == False):
                 if(MENUPOS == 0):
                     print("changing mode: Dex")
                     cfg.CURRENT_MODE = 1

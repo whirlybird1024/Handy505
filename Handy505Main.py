@@ -101,7 +101,7 @@ def main():
                 pressed = True
                 ##print event.key 
 
-                for key, val in KEY_BINDINGS.iteritems():
+                for key, val in KEY_BINDINGS.items():
                     if event.key == key:
                         ##print event.key
                         action = val
@@ -132,7 +132,7 @@ def gameLoop(main, menu):
             pressed = True
             ##print event.key 
 
-            for key, val in KEY_BINDINGS.iteritems():
+            for key, val in KEY_BINDINGS.items():
                 if event.key == key:
                     ##print event.key
                     action = val
@@ -158,7 +158,7 @@ def addMon(num, caught):
     with open('csv/dexOwnerList.csv') as csvfile:
         ownData = csv.DictReader(csvfile)
         for row in ownData:
-            for column, value in row.iteritems():
+            for column, value in row.items():
                 lines.setdefault(column, []).append(value)
 
     holder = {}
@@ -244,7 +244,7 @@ class dataCleaner():
         with open('csv/pokemon_moves.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     self.lines.setdefault(column, []).append(value)
                     
         #for i in range (0,len(self.lines['pokedex_id'])):
