@@ -50,6 +50,7 @@ from menu import MainMenu
 from menu import SoundMenu
 from dex import dexMainRBY
 from genPkmn import test
+#from scan import scan
 import cfg
 
 
@@ -70,12 +71,15 @@ def main():
         2: dexMainRBY(screen, FONTSIZE)
     }
 
+    addMon(25, True)
+
     #TEST
     #test()
 
     main = switch.get(MODE, None)
     menu = MainMenu(screen,FONTSIZE)
     sMenu = SoundMenu(screen,FONTSIZE)
+    #scn = scan(screen)
     #dataCleaner() ##cleans csv files of unneeded data
     #imageCleaner() ##adds transparency to list of pics
 
@@ -88,24 +92,27 @@ def main():
                     
     while running:
         for event in pygame.event.get():
-            #print event
+            ##print event
             if event.type == pygame.QUIT:
                 running = False
 
             if event.type == pygame.KEYDOWN:
                 TIMER = 0
                 pressed = True
-                #print event.key 
+                ##print event.key 
 
                 for key, val in KEY_BINDINGS.iteritems():
                     if event.key == key:
-                        #print event.key
+                        ##print event.key
                         action = val
                         inputManager(main, menu, sMenu, action)
         #if cfg.CURRENT_MODE == 0: menu.dispMenu()
         #elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
         #elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
-        #print "current mode " + str(cfg.CURRENT_MODE)
+                        
+        #if cfg.CURRENT_MODE == 2: scn.scanning()
+                        
+        ##print "current mode " + str(cfg.CURRENT_MODE)
         pygame.display.flip()
 
     #gameLoop(main)
@@ -123,25 +130,87 @@ def gameLoop(main, menu):
         if event.type == pygame.KEYDOWN:
             TIMER = 0
             pressed = True
-            #print event.key 
+            ##print event.key 
 
             for key, val in KEY_BINDINGS.iteritems():
                 if event.key == key:
-                    #print event.key
+                    ##print event.key
                     action = val
                     inputManager(main, menu, action)
         main.dexRBYRUN()
-        #print "running"
+        ##print "running"
         pygame.display.flip()
 
-def inputManager(main, menu, sMenu, action):
+def inputManager(main, menu, sMenu, action): #scn,
     if cfg.CURRENT_MODE == 0: menu.inputHandler(action)
     elif cfg.CURRENT_MODE == 1: main.inputHandler(action)
+    #elif cfg.CURRENT_MODE == 2: scn.inputHandler(action)
     elif cfg.CURRENT_MODE == 3: sMenu.inputHandler(action)
 
     if cfg.CURRENT_MODE == 0: menu.dispMenu()
     elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
+    #elif cfg.CURRENT_MODE == 2: scn.scanning()
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
+
+def addMon(num, caught):
+    lines = {}
+    
+    with open('csv/dexOwnerList.csv') as csvfile:
+        ownData = csv.DictReader(csvfile)
+        for row in ownData:
+            for column, value in row.iteritems():
+                lines.setdefault(column, []).append(value)
+
+    holder = {}
+    with open('csv/dexHolder.csv') as csvfile:
+        holderData = csv.DictReader(csvfile)
+        for row in holderData:
+            holder = row
+
+    ##print lines['caught'][num-1]
+    if(caught and lines['caught'][num-1] == '0'):
+            #print "caught!"
+            lines['caught'][num-1] = 1
+            
+            holder['Own'] = (int(holder['Own']) + 1)
+            holder['caught'] = (int(holder['caught']) + 1)
+
+            if(lines['seen'][num-1] == '0'):
+                #print 'seen!'
+                lines['seen'][num-1] = 1
+                holder['seen'] = (int(holder['seen']) + 1)
+            #print holder['Own']
+            
+    elif(not caught and lines['seen'][num-1] == '0'):
+            lines['seen'][num-1] = 1
+            holder['seen'] = (int(holder['seen']) + 1)
+    #print holder['name']
+    headers = ['name','class','intro','seen','caught','Own']        
+    with open('csv/dexHolder.csv', 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=headers)
+        writer.writeheader()
+        writer.writerow(holder)
+
+    headers = ['species_id','name','pokedex_number','seen','caught']
+    with open('csv/dexOwnerList.csv', 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=headers)
+        writer.writeheader()
+        for data in lines['species_id']:
+            ##print lines
+            ##print lines[data]
+            ##print data
+            temp = {}
+            i=0
+            while i<len(headers):
+                ##print data[i]
+                temp[headers[i]] = lines[headers[i]][int(data)-1]
+                ##print headers[i]
+                ##print temp[headers[i]]
+                i+=1
+            ##print temp
+            writer.writerow(temp)
+    
+    #dexMainRBY(screen, FONTSIZE)
 
 
 class dexHolderInfo():
@@ -158,13 +227,13 @@ class dexHolderInfo():
 class imageCleaner():
     def __init__(self):
         for i in range(1,152):
-            print "scrubbing " + str(i)+".png"
+            #print "scrubbing " + str(i)+".png"
             image = pygame.image.load("pics/generation-1/"+str(i)+".png").convert_alpha()
             for x in range(image.get_width()):
                 for y in range(image.get_height()):
                     if image.get_at((x, y)) == (255, 255, 255, 255):
                         image.set_at((x, y), (255, 255, 255, 0))
-            #print str(x)
+            ##print str(x)
             pygame.image.save(image, "pics/generation-1/Transparent/"+str(i)+".png")
 
 #scrubs useless data and adds data to csv files
@@ -181,12 +250,14 @@ class dataCleaner():
         #for i in range (0,len(self.lines['pokedex_id'])):
         i=0
         while i<len(self.lines['version_group_id']):
-            #print i
+            ##print i
             vers =  int(self.lines['version_group_id'][i])
             if(vers != 1):
-                print "delete line: " + str(self.lines['version_group_id'][i])
+                #print "delete line: " + str(self.lines['version_group_id'][i])
                 del self.lines['pokemon_id'][i]
             else: i+=1
+
+        headers = ['species_id','name','pokedex_number','seen','caught']
         
         with open('csv/pokemon_moves.csv', 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=headers)
@@ -197,7 +268,7 @@ class dataCleaner():
                 while i<len(headers):
                     temp[headers[i]] = data[i]
                     i+=1
-                print temp
+                #print temp
                 writer.writerow(temp)
 
 if __name__=="__main__":

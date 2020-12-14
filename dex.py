@@ -32,7 +32,7 @@ class dexMainRBY():
         topEntry = self.data.getTopEntry()
     #buffer = pygame.Surface((256, 256))
     def dexRBYRUN(self):
-        #print entry
+        ##print entry
         menu = self.menu
         data = self.data
         screen = self.screen
@@ -46,20 +46,20 @@ class dexMainRBY():
         if(scr == 0):
             screen.fill((248,232,248))
             if(pokeList == 0):
-                #print "DexList"
+                ##print "DexList"
                 menu.rbyDexMenu()
                 menu.populateListRBY(topEntry)
             elif(pokeList == 1):
-                #print "SeenList"
+                ##print "SeenList"
                 menu.rbyDexMenu()
                 menu.populateListSeen(topEntry)
             elif(pokeList == 2):
-                #print "caughtList"
+                ##print "caughtList"
                 menu.rbyDexMenu()
                 menu.populateListCaught(topEntry)
             menu.Arrow()
         elif(scr == 1):
-            #print entry
+            ##print entry
             screen.fill((248,232,248))#255,255,255
             entrySCR.rbyEntry()
             if(caught == 1):
@@ -99,13 +99,13 @@ class DataRead():
         with open('csv/dexOwnerList.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
-                #print row
+                ##print row
                 if(row['seen'] == '1'):
                     totalSeen += 1
-                    #print totalSeen
+                    ##print totalSeen
                 if(row['caught'] == '1'):
                     totalCaught += 1
-                    #print totalCaught
+                    ##print totalCaught
                 self.lines.append(row)
 
         with open('csv/dexHolder.csv') as csvfile:
@@ -131,7 +131,7 @@ class DataRead():
 
     def getEntry(self, num):
         totalData = len(self.lines)
-        #print "Data Length: "  + str(totalData)
+        ##print "Data Length: "  + str(totalData)
         return self.lines[num]
 
     def getSpecies(self,num):
@@ -151,7 +151,7 @@ class DataRead():
         with open('csv/dexOwnerList.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
-                    #print row
+                    ##print row
                 if(row['seen'] == '1'):
                       return iNum
                 else:
@@ -159,6 +159,48 @@ class DataRead():
         
 
     #def getSeen(self):
+    def reloadData(self):
+        self.font = font
+        self.screen = screen
+        self.lines = list()
+        self.holder = {}
+        self.species = list()
+        self.flavor = list()
+        self.htWt = list()
+        global totalData
+        global totalSeen
+        global totalCaught
+        with open('csv/dexOwnerList.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                ##print row
+                if(row['seen'] == '1'):
+                    totalSeen += 1
+                    ##print totalSeen
+                if(row['caught'] == '1'):
+                    totalCaught += 1
+                    ##print totalCaught
+                self.lines.append(row)
+
+        with open('csv/dexHolder.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                self.holder = row
+
+        with open('csv/pokemon_species_names.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                self.species.append(row)
+                
+        with open('csv/pokemon_species_flavor_text.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                self.flavor.append(row)
+
+        with open('csv/pokemon.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                self.htWt.append(row)
         
         
 
@@ -233,7 +275,7 @@ class RenderMenu():
                 ball = pygame.transform.scale(ball, (25,25))
                 screen.blit(ball, (62,(70+(i*60))))
 
-            #print "i: " + str(i)
+            ##print "i: " + str(i)
             numList[i] = entry
 
     def populateListSeen(self, topEntry):
@@ -261,8 +303,8 @@ class RenderMenu():
                 top += 1
             if(entry >= totalData - 1):
                 i = 7
-                #print "data length: " + str(totalData)
-            #print "i: " + str(i)
+                ##print "data length: " + str(totalData)
+            ##print "i: " + str(i)
             #numList[i] = entry
 
     def populateListCaught(self, topEntry):
@@ -360,17 +402,17 @@ class RenderMenu():
                         scr = 1
                     elif(dat['seen'] == '0'):
                         caught = 0
-                    #print caught
+                    ##print caught
                 elif(self.subPosition == 2):
                     dat = data.getEntry(numList[position])
                     if(dat['caught'] == '1'):
                         soundFile = 'sound/criesRBY/'+str(format(int(dat['species_id']), '03'))+".wav"
-                        #print ("Update")
-                        #print ("File exists:"+str(path.exists(soundFile)))
+                        ##print ("Update")
+                        ##print ("File exists:"+str(path.exists(soundFile)))
                         if(path.exists(soundFile)):
                             pygame.mixer.music.load(soundFile)
                             pygame.mixer.music.set_volume(cfg.VOLUME)
-                            #print cry
+                            ##print cry
                             pygame.mixer.music.play()
         if(action == "B"):
             if(menu == False):
@@ -379,15 +421,15 @@ class RenderMenu():
                 else: scr = 0
             else: cfg.CURRENT_MODE = 0
 
-        if(action == "R"):
-            print "changeRight, PokeList: " + str(pokeList)
+        if(action == "RIGHT"):
+            #print "changeRight, PokeList: " + str(pokeList)
             if(pokeList < listNum):
                 pokeList += 1
             else:
                 pokeList = 0
 
-        if(action == "L"):
-            print "changeLeft"
+        if(action == "LEFT"):
+            #print "changeLeft"
             if(pokeList > 0):
                 pokeList -= 1
             else:
@@ -419,8 +461,8 @@ class dexterInfo():
         if(path.exists(soundFile)):
             pygame.mixer.music.load(soundFile)
             pygame.mixer.music.set_volume(cfg.VOLUME)
-            print soundFile
-            #print cry
+            #print soundFile
+            ##print cry
             pygame.mixer.music.play()
 
     def dexterInputRBY(self, action):
@@ -429,12 +471,12 @@ class dexterInfo():
         global dexSpeak
         
         if(action == "A"):
-            print "dexter cancel A"
+            #print "dexter cancel A"
             pygame.mixer.music.stop()
             dexSpeak = False
             scr = 0
         if(action == 'B'):
-            print "dexter B"
+            #print "dexter B"
             dexSpeak = False
             pygame.mixer.music.stop()
             scr = 0
@@ -501,13 +543,13 @@ class RenderEntry():
         screen.blit(species, (220,90))
 
         #flavor
-        #print flv['flavor_text']
+        ##print flv['flavor_text']
         flavor = flv['flavor_text']
         flavor = flavor.splitlines()
-        #print flavor
+        ##print flavor
         i = 0
         while (i<3):
-            #print(self.page)
+            ##print(self.page)
             if(self.page):
                 flvText = self.entryFont.render(flavor[i], True, (0, 0, 0))
                 screen.blit(flvText, (30,280 + (i*70)))
@@ -564,6 +606,6 @@ class RenderEntry():
         if(action == "A"):
             self.page = not self.page
         if(action == 'B'):
-            print "cancel"
+            #print "cancel"
             self.page = True
             scr = 0

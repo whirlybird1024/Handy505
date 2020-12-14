@@ -4,7 +4,7 @@ import os.path
 from os import path
 #import traceback
 import csv
-import pandas as pd
+#import pandas as pd
 import math
 
 #import operator
@@ -117,20 +117,20 @@ class Utility():
         with open('csv/pokemon_moves.csv') as csvfile:
             moveData = csv.DictReader(csvfile)
             for row in moveData:
-                print "CurNum: " + str(row['pokemon_id'])
-                #print "TypeNum: " + str(typeNum)
+                ##print "CurNum: " + str(row['pokemon_id'])
+                ##print "TypeNum: " + str(typeNum)
                 if(row['pokemon_id'] == typeNum):
                     if(row['pokemon_id'] > typeNum): break
-                    print "Mon Found"
+                    #print "Mon Found"
                     if(row['pokemon_move_method_id'] == 1 or row['pokemon_move_method_id'] == 2):
-                        print "Moves Found"
+                        #print "Moves Found"
                         if(row['level'] >= lvl):
-                            print "Move Found"
-                            print "MoveID" + row['move_id']
+                            #print "Move Found"
+                            #print "MoveID" + row['move_id']
                             moveData.append(row['move_id'])
 
         moveNum = len(moves)
-        print "Movenum" + str(moveNum)
+        #print "Movenum" + str(moveNum)
         #randNum =
         moveIDs = random.sample(range(0, moveNum), 3)
 

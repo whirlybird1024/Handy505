@@ -14,6 +14,7 @@ import cfg
 SCREEN = (480, 480)
 MENUPOS = 0
 OPTIONS = False
+SCAN = False
 MenuPos = {
         0: (33,360),  ## 0  2
         1: (33,400),  ## 1  3
@@ -47,7 +48,7 @@ class MainMenu():
         screen.blit(TrainerSprite, (114,50))
         
         #menu text
-        if(OPTIONS == False):
+        if(OPTIONS == False and SCAN == False):
             dex = font.render("POKEDEX", True, (0, 0, 0))
             screen.blit(dex, (60,360))
             scan = font.render("SCAN", True, (0, 0, 0))
@@ -67,6 +68,10 @@ class MainMenu():
             screen.blit(dex, (282,360))
             scan = font.render("ABOUT", True, (0, 0, 0))
             screen.blit(scan, (285,400))
+        elif(SCAN):
+            scnMes = font.render("Coming soon! ...Hopefully", True, (0, 0, 0))
+            screen.blit(scnMes, (45,230))
+            
 
         ball = pygame.image.load("pics/menu/pokeballIcon.png")
         ball = pygame.transform.scale(ball, (25,25))
@@ -77,10 +82,14 @@ class MainMenu():
         global MENUPOS
         global OPTIONS
         if(action == "A"):      
-            if(OPTIONS == False):
+            if(OPTIONS == False and SCAN == false):
                 if(MENUPOS == 0):
-                    print "changing mode"
+                    print("changing mode: Dex")
                     cfg.CURRENT_MODE = 1
+                if(MENUPOS == 1):
+                    print("changing mode: Scan")
+                    #cfg.CURRENT_MODE = 2
+                    SCAN = True
                 if(MENUPOS == 3):
                     OPTIONS = True
                     MENUPOS = 0
@@ -90,13 +99,15 @@ class MainMenu():
                 if(MENUPOS == 2):
                     subprocess.call('git pull origin main', shell=True)
                 if(MENUPOS == 1):
-                    print "changing mode"
+                    #print "changing mode"
                     cfg.CURRENT_MODE = 3
                 if(MENUPOS == 3):
                     soundFile = 'sound/dexterEntries/Dexter.wav'
                     pygame.mixer.music.load(soundFile)
                     pygame.mixer.music.set_volume(cfg.VOLUME)
                     pygame.mixer.music.play()
+            elif(SCAN):
+                SCAN = False
                     
         if(action == "B" and OPTIONS == True):
             OPTIONS = False
