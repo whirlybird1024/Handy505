@@ -100,7 +100,7 @@ def main():
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
     elif cfg.CURRENT_MODE == 4: intro.play()
         
-                    
+    screen.blit(pygame.transform.rotate(screen, 90),(0,0))        
     while running:
         for event in pygame.event.get():
             ##print event
@@ -124,6 +124,7 @@ def main():
         #if cfg.CURRENT_MODE == 2: scn.scanning()
                         
         ##print "current mode " + str(cfg.CURRENT_MODE)
+        
         pygame.display.flip()
 
     #gameLoop(main)
