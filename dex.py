@@ -96,7 +96,8 @@ class DataRead():
         global totalData
         global totalSeen
         global totalCaught
-        with open('csv/dexOwnerList.csv') as csvfile:
+        #with open('csv/dexOwnerList.csv') as csvfile:
+        with open('csv/dexOwnerListDemo.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
                 ##print row
@@ -130,7 +131,7 @@ class DataRead():
 
 
     def getEntry(self, num):
-        totalData = len(self.lines)
+        ##totalData = len(self.lines)
         ##print "Data Length: "  + str(totalData)
         return self.lines[num]
 
@@ -148,7 +149,8 @@ class DataRead():
     
     def getTopEntry(self):
         iNum = 0
-        with open('csv/dexOwnerList.csv') as csvfile:
+        #with open('csv/dexOwnerList.csv') as csvfile:
+        with open('csv/dexOwnerListDemo.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
                     ##print row
@@ -170,7 +172,8 @@ class DataRead():
         global totalData
         global totalSeen
         global totalCaught
-        with open('csv/dexOwnerList.csv') as csvfile:
+        #with open('csv/dexOwnerList.csv') as csvfile:
+        with open('csv/dexOwnerListDemo.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
                 ##print row

@@ -1,42 +1,52 @@
-sprite, text
+sprite,text
 
-chris-1.png,"Hello there! 
+str("chris-01.png"),"Hello there! 
 Welcome to the 
-world of pokémon!" 
+world of pokemon!
+  " 
 
-chris-1.png, "My name is Chris! 
+str("chris-1.png"),"My name is Chris! 
+But you knew that
 People call me 
-the Pokémon Prof!"
+the Pokemon Prof!"
 
-chris-1.png, "This world is 
+str("chris-1.png"),"I swear! People
+definitely call me that!
+..."
+
+str("chris-1.png"),"This world is 
 inhabited by creatures 
-called pokémon! "
+called pokemon! "
 
-chris-1.png, "For some people, 
-pokémon are pets. 
+str("chris-1.png"),"For some people, 
+pokemon are pets. 
 Others use them 
 for fights. "
 
-chris-1.png, "Myself..."
-
-chris-1.png, "I study pokémon 
+str("chris-1.png"),"Myself...
+I study pokemon 
 as a profession."
 
-chris-1.png,"Like Duplo here!
-wait, hold on a sec"
+str("chris-1.png"),"Like Duplo here!
+wait, hold on a sec
+Duplo used TRANSFORM
+   "
 
-chris-2.png,"There, that's better."
+str("chris-2.png"),"There, that's better.
+  "
 
-chris-2.png, "Now normally I'd ask
+str("chris-2.png"),"Now normally I'd ask
 you your name.
 But I don't think that
 is really necessary
 in your case."
 
-"NAME + ".png, "Merry Christmas
-" + NAME + "!"
+str(CLASS),"Merry Christmas
+NAME!
+Well I guess it's
+not really Christmas"
 
-"NAME + ".png, "Normally I'd give
+str(CLASS),"I'd also give
 you your first pokemon
 But it seems like you
-already brought your own!"
+brought your own!"

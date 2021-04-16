@@ -49,6 +49,7 @@ KEY_BINDINGS = {
 from menu import MainMenu
 from menu import SoundMenu
 from dex import dexMainRBY
+from intro import playIntro
 from genPkmn import test
 #from scan import scan
 import cfg
@@ -63,7 +64,9 @@ def main():
 
     pygame.display.set_caption('Handy505')
 
-    screen = pygame.display.set_mode(SCREEN)
+    screen = pygame.display.set_mode(SCREEN, pygame.FULLSCREEN)
+
+    pygame.display.toggle_fullscreen()
 
     switch = {
         0: dexMainRBY(screen, FONTSIZE),
@@ -75,19 +78,27 @@ def main():
 
     #TEST
     #test()
+    DexHolder = dexHolderInfo()
+    holderInfo = DexHolder.getInfo()
 
     main = switch.get(MODE, None)
     menu = MainMenu(screen,FONTSIZE)
     sMenu = SoundMenu(screen,FONTSIZE)
+    intro = playIntro(screen,FONTSIZE)
     #scn = scan(screen)
     #dataCleaner() ##cleans csv files of unneeded data
     #imageCleaner() ##adds transparency to list of pics
 
     running = True
+    print("Holder Info: " + holderInfo['intro'])
+    if(holderInfo['intro'] == "False"):
+        cfg.CURRENT_MODE = 4
+        print("PLAY INTRO")
 
     if cfg.CURRENT_MODE == 0: menu.dispMenu()
     elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
+    elif cfg.CURRENT_MODE == 4: intro.play()
         
                     
     while running:
@@ -105,7 +116,7 @@ def main():
                     if event.key == key:
                         ##print event.key
                         action = val
-                        inputManager(main, menu, sMenu, action)
+                        inputManager(main, menu, sMenu, intro, action)
         #if cfg.CURRENT_MODE == 0: menu.dispMenu()
         #elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
         #elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
@@ -141,16 +152,18 @@ def gameLoop(main, menu):
         ##print "running"
         pygame.display.flip()
 
-def inputManager(main, menu, sMenu, action): #scn,
+def inputManager(main, menu, sMenu, intro, action): #scn,
     if cfg.CURRENT_MODE == 0: menu.inputHandler(action)
     elif cfg.CURRENT_MODE == 1: main.inputHandler(action)
     #elif cfg.CURRENT_MODE == 2: scn.inputHandler(action)
     elif cfg.CURRENT_MODE == 3: sMenu.inputHandler(action)
+    elif cfg.CURRENT_MODE == 4: intro.inputHandler(action)
 
     if cfg.CURRENT_MODE == 0: menu.dispMenu()
     elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
     #elif cfg.CURRENT_MODE == 2: scn.scanning()
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
+    elif cfg.CURRENT_MODE == 4: intro.play()
 
 def addMon(num, caught):
     lines = {}
