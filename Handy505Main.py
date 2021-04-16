@@ -66,7 +66,7 @@ def main():
 
     screen = pygame.display.set_mode(SCREEN, pygame.FULLSCREEN)
 
-    pygame.display.toggle_fullscreen()
+    #pygame.display.toggle_fullscreen()
 
     switch = {
         0: dexMainRBY(screen, FONTSIZE),
