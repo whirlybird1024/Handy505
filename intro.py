@@ -74,13 +74,13 @@ class playIntro():
         
         script = dat.getIntroScript(PAGE)
         script = script.replace("NAME", NAME)
-        print script
+        #print script
         script = script.splitlines()
-        print script
+        #print script
         i = 0
         while (i<2):
-            print(i)
-            print(script[i])
+            #print(i)
+            #print(script[i])
             if(page):
                 if(i < len(script)):
                     scriptText = self.font.render(script[i], True, (0, 0, 0))
@@ -113,14 +113,14 @@ class DataRead():
             for row in self.introScript:
                 self.script.append(row)
         LENGTH =  len(self.script)
-        print(LENGTH)
+        #print(LENGTH)
 
     def getName(self):
         return self.holder['name']
     def getClass(self):
         return str(self.holder['class']) + ".png"
     def getIntroImage(self,num):
-        print("Name: "+NAME)
+        #print("Name: "+NAME)
         ##if(str(self.script[num]['sprite']) is 'NAME'):
         ##    print(NAME)
         ##    return str(NAME) + ".png"
