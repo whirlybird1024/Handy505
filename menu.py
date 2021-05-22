@@ -54,7 +54,7 @@ class MainMenu():
             scan = font.render("SCAN", True, (0, 0, 0))
             screen.blit(scan, (60,400))
 
-            dex = font.render(NAME, True, (0, 0, 0))
+            dex = font.render("ZONE", True, (0, 0, 0))
             screen.blit(dex, (282,360))
             scan = font.render("OPTIONS", True, (0, 0, 0))
             screen.blit(scan, (282,400))
@@ -91,6 +91,9 @@ class MainMenu():
                     print("changing mode: Scan")
                     #cfg.CURRENT_MODE = 2
                     SCAN = True
+                if(MENUPOS == 2):
+                    print("changing mode: Zone")
+                    cfg.CURRENT_MODE = 5
                 if(MENUPOS == 3):
                     OPTIONS = True
                     MENUPOS = 0

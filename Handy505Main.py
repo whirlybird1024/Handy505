@@ -8,11 +8,13 @@ import os.path
 from os import path
 #import traceback
 import csv
+from gpiozero import Button
 
 #import operator
 
 # CONFIG #
-SCREEN = (480, 480)
+#SCREEN = (600, 480) #correct ratio for pi
+SCREEN = (480, 500)
 ALIGN = 0 # "LEFT" "CENTER" "RIGHT"
 ROTATE = 1 # 0 1 2 3
 
@@ -25,24 +27,15 @@ MODE = 2 #RBMENU NEWMENU RBDEX NEWDEX
 
 KEY_BINDINGS = {
 
-    pygame.K_RIGHT: "RIGHT",
-    pygame.K_DOWN: "DOWN",
-    pygame.K_LEFT: "LEFT",
-    pygame.K_UP: "UP",
-    pygame.K_SPACE: "A",
-    pygame.K_LCTRL: "B",
-    pygame.K_x: "R",
-    pygame.K_z: "L",
-
-    pygame.K_q: "QUIT",
-    pygame.K_ESCAPE: "QUIT",
-
-    pygame.K_1: "ROTATE",
-    pygame.K_2: "ALIGN",
-
-    pygame.K_b: "BLACKLIST",
-    pygame.K_w: "WHITELIST",
+    Button(25): "RIGHT",
+    Button(24): "DOWN",
+    Button(23): "LEFT",
+    Button(22): "UP",
+    Button(5): "A",
+    Button(12): "B",
 }
+
+led = LED(4)
 
 ##########
 
@@ -51,6 +44,7 @@ from menu import SoundMenu
 from dex import dexMainRBY
 from intro import playIntro
 from genPkmn import test
+from pokeZone import zoneScreen
 #from scan import scan
 import cfg
 
@@ -64,7 +58,7 @@ def main():
 
     pygame.display.set_caption('Handy505')
 
-    screen = pygame.display.set_mode(SCREEN, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(SCREEN)#, pygame.FULLSCREEN)
 
     #pygame.display.toggle_fullscreen()
 
@@ -85,6 +79,7 @@ def main():
     menu = MainMenu(screen,FONTSIZE)
     sMenu = SoundMenu(screen,FONTSIZE)
     intro = playIntro(screen,FONTSIZE)
+    pokeZone = zoneScreen(screen,FONTSIZE)
     #scn = scan(screen)
     #dataCleaner() ##cleans csv files of unneeded data
     #imageCleaner() ##adds transparency to list of pics
@@ -92,13 +87,14 @@ def main():
     running = True
     print("Holder Info: " + holderInfo['intro'])
     if(holderInfo['intro'] == "False"):
-        cfg.CURRENT_MODE = 4
+        #cfg.CURRENT_MODE = 4
         print("PLAY INTRO")
 
     if cfg.CURRENT_MODE == 0: menu.dispMenu()
     elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
     elif cfg.CURRENT_MODE == 4: intro.play()
+    elif cfg.CURRENT_MODE == 5: pokeZone.dispZone()
         
     screen.blit(pygame.transform.rotate(screen, 90),(0,0))        
     while running:
@@ -116,7 +112,7 @@ def main():
                     if event.key == key:
                         ##print event.key
                         action = val
-                        inputManager(main, menu, sMenu, intro, action)
+                        inputManager(main, menu, sMenu, intro, action, screen,pokeZone)
         #if cfg.CURRENT_MODE == 0: menu.dispMenu()
         #elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
         #elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
@@ -124,47 +120,42 @@ def main():
         #if cfg.CURRENT_MODE == 2: scn.scanning()
                         
         ##print "current mode " + str(cfg.CURRENT_MODE)
-        
+        #GPIO
+                        
+        Button(25).when_pressed = inputManager(main, menu, sMenu, intro, "RIGHT", screen,pokeZone)
+        Button(24).when_pressed = inputManager(main, menu, sMenu, intro, "DOWN", screen,pokeZone)
+        Button(23).when_pressed = inputManager(main, menu, sMenu, intro, "LEFT", screen,pokeZone)
+        Button(22).when_pressed = inputManager(main, menu, sMenu, intro, "UP", screen,pokeZone)
+        Button(5).when_pressed = inputManager(main, menu, sMenu, intro, "A", screen,pokeZone)
+        Button(12).when_pressed = inputManager(main, menu, sMenu, intro, "B", screen,pokeZone) 
+                
+        led.on()
         pygame.display.flip()
 
     #gameLoop(main)
 
     
-def gameLoop(main, menu):
-    running = True
-        
-                    
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
 
-        if event.type == pygame.KEYDOWN:
-            TIMER = 0
-            pressed = True
-            ##print event.key 
 
-            for key, val in KEY_BINDINGS.items():
-                if event.key == key:
-                    ##print event.key
-                    action = val
-                    inputManager(main, menu, action)
-        main.dexRBYRUN()
-        ##print "running"
-        pygame.display.flip()
-
-def inputManager(main, menu, sMenu, intro, action): #scn,
+def inputManager(main, menu, sMenu, intro, action, screen,pokeZone): #scn,
+    #input methods
     if cfg.CURRENT_MODE == 0: menu.inputHandler(action)
     elif cfg.CURRENT_MODE == 1: main.inputHandler(action)
     #elif cfg.CURRENT_MODE == 2: scn.inputHandler(action)
     elif cfg.CURRENT_MODE == 3: sMenu.inputHandler(action)
     elif cfg.CURRENT_MODE == 4: intro.inputHandler(action)
+    elif cfg.CURRENT_MODE == 5: pokeZone.inputHandler(action)
 
+    #display methods
     if cfg.CURRENT_MODE == 0: menu.dispMenu()
     elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
     #elif cfg.CURRENT_MODE == 2: scn.scanning()
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
     elif cfg.CURRENT_MODE == 4: intro.play()
+    elif cfg.CURRENT_MODE == 5: pokeZone.dispZone()
+
+    #make sure to uncomment for screen flipping
+    #screen.blit(pygame.transform.rotate(screen, 90),(0,0))
 
 def addMon(num, caught):
     lines = {}

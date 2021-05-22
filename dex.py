@@ -9,9 +9,10 @@ import cfg
 
 topEntry = 0 #entry at the top of the list
 position = 0
-scr = 0 #0=menu 1=entry 2=dexter
+scr = 0 #0=menu 1=entry 2=dexter 3=hab
 caught = 0 #0=unseen 1=seen 2=caught
 dexSpeak = False #is dexter speaking
+habMode = False
 pokeList = 0 #0=norm 1=seen 2=caught 3=Type 4=Beta
 listNum = 2 #total number of above lists that are complete
 totalData = 151
@@ -28,6 +29,7 @@ class dexMainRBY():
         self.entry = RenderEntry(self.font, screen, self.data)
         self.screen = screen
         self.dexter = dexterInfo(self.font, screen, self.data)
+        self.habitat = habitatInfo(self.font, screen, self.data)
         global topEntry
         topEntry = self.data.getTopEntry()
     #buffer = pygame.Surface((256, 256))
@@ -37,8 +39,10 @@ class dexMainRBY():
         data = self.data
         screen = self.screen
         dexter = self.dexter
+        habitat = self.habitat
         entrySCR = self.entry
         global dexSpeak
+        global habMode
         
         #Bulba = pygame.image.load("pics/sugimori/1.png")
         #Bulba = pygame.transform.scale(Bulba, (350,350))
@@ -70,6 +74,10 @@ class dexMainRBY():
             screen.fill((248,232,248))#255,255,255
             dexter.dexter()
             dexSpeak = True
+        elif(scr == 3 and not habMode):
+            screen.fill((248,232,248))#255,255,255
+            habitat.habitat()
+            habMode = True
 
     #all main classes have an inputHandler so input collection can be uniform.
     #it sends input where it needs to go depending on the mode
@@ -80,6 +88,8 @@ class dexMainRBY():
             self.entry.entryInputRBY(action)
         elif(scr == 2):
             self.dexter.dexterInputRBY(action)
+        elif(scr == 3):
+            self.habitat.habitatInputRBY(action)
         
 
     
@@ -93,6 +103,7 @@ class DataRead():
         self.species = list()
         self.flavor = list()
         self.htWt = list()
+        self.hab = list()
         global totalData
         global totalSeen
         global totalCaught
@@ -128,6 +139,11 @@ class DataRead():
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
                 self.htWt.append(row)
+                
+        with open('csv/pokemon_species.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                self.hab.append(row)
 
 
     def getEntry(self, num):
@@ -143,6 +159,9 @@ class DataRead():
 
     def getHtWt(self,num):
         return self.htWt[num]
+
+    def getHab(self,num):
+        return self.hab[num]
 
     def getUserInfo(self):
         return self.holder
@@ -169,6 +188,7 @@ class DataRead():
         self.species = list()
         self.flavor = list()
         self.htWt = list()
+        self.hab = list()
         global totalData
         global totalSeen
         global totalCaught
@@ -204,6 +224,10 @@ class DataRead():
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
                 self.htWt.append(row)
+        with open('csv/pokemon_species.csv') as csvfile:
+            self.ownData = csv.DictReader(csvfile)
+            for row in self.ownData:
+                self.hab.append(row)
         
         
 
@@ -417,6 +441,11 @@ class RenderMenu():
                             pygame.mixer.music.set_volume(cfg.VOLUME)
                             ##print cry
                             pygame.mixer.music.play()
+                elif(self.subPosition == 3):
+                    dat = data.getEntry(numList[position])
+                    if(dat['seen'] == '1'):
+                        caught = 1
+                        scr = 3
         if(action == "B"):
             if(menu == False):
                 if(scr == 0):
@@ -467,6 +496,12 @@ class dexterInfo():
             #print soundFile
             ##print cry
             pygame.mixer.music.play()
+        else:
+            pygame.mixer.music.load('sound/dexterEntries/Unknown.wav')
+            pygame.mixer.music.set_volume(cfg.VOLUME)
+            #print soundFile
+            ##print cry
+            pygame.mixer.music.play()
 
     def dexterInputRBY(self, action):
         data = self.data
@@ -481,6 +516,53 @@ class dexterInfo():
         if(action == 'B'):
             #print "dexter B"
             dexSpeak = False
+            pygame.mixer.music.stop()
+            scr = 0
+
+class habitatInfo():
+    def __init__(self, font, screen,data):
+        self.font = font
+        self.screen = screen
+        self.data = data
+
+    def habitat(self):
+        font = self.font
+        screen = self.screen
+        data = self.data
+
+        num = numList[position]
+
+        hab = data.getHab(num)
+
+        pic = pygame.image.load("pics/habitat/hab"+hab['habitat_id']+".png")
+        pic = pygame.transform.scale(pic, (480,480))
+
+        screen.blit(pic, (0,0))
+
+        sprite = pygame.image.load("pics/yellow/gbc/"+str(num+1)+".png")
+        sprite = pygame.transform.scale(sprite, (130,130))
+        screen.blit(sprite, (175,170))
+
+        dat = data.getEntry(num)
+
+        soundFile = 'sound/criesRBY/'+str(format(int(dat['species_id']), '03'))+".wav"
+        
+        if(path.exists(soundFile)):
+            pygame.mixer.music.load(soundFile)
+            pygame.mixer.music.set_volume(cfg.VOLUME)
+            pygame.mixer.music.play()
+
+    def habitatInputRBY(self, action):
+        data = self.data
+        global scr
+        global habMode
+        
+        if(action == "A"):
+            pygame.mixer.music.stop()
+            habMode = False
+            scr = 0
+        if(action == 'B'):
+            habMode = False
             pygame.mixer.music.stop()
             scr = 0
 
