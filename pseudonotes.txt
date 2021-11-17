@@ -1,0 +1,12 @@
+timer function:
+	iter = 0
+	count = 0
+	loop:
+		count++
+		if(count == 100):
+			count = 0
+			iter++
+			if(iter == 9): iter = 0
+
+count 3-6 : 1/chance can start move (if start can't start until new cycle)
+move on frames dictated by count, each move is on an iter

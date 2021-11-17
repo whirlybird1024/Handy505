@@ -8,7 +8,7 @@ import os.path
 from os import path
 #import traceback
 import csv
-from gpiozero import Button
+#from gpiozero import LED,Button
 
 #import operator
 
@@ -27,15 +27,26 @@ MODE = 2 #RBMENU NEWMENU RBDEX NEWDEX
 
 KEY_BINDINGS = {
 
-    Button(25): "RIGHT",
-    Button(24): "DOWN",
-    Button(23): "LEFT",
-    Button(22): "UP",
-    Button(5): "A",
-    Button(12): "B",
+    #Button(25): "RIGHT",
+    #Button(24): "DOWN",
+    #Button(23): "LEFT",
+    #Button(22): "UP",
+    #Button(5): "A",
+    #Button(12): "B",
+
+    pygame.K_RIGHT: "RIGHT",
+    pygame.K_DOWN: "DOWN",
+    pygame.K_LEFT: "LEFT",
+    pygame.K_UP: "UP",
+    pygame.K_SPACE: "A",
+    pygame.K_LCTRL: "B",
+    pygame.K_x: "R",
+    pygame.K_z: "L",
+
 }
 
-led = LED(4)
+
+#led = LED(4)
 
 ##########
 
@@ -95,9 +106,13 @@ def main():
     elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
     elif cfg.CURRENT_MODE == 4: intro.play()
     elif cfg.CURRENT_MODE == 5: pokeZone.dispZone()
+
+    #led.value = 1
         
     screen.blit(pygame.transform.rotate(screen, 90),(0,0))        
     while running:
+        if cfg.CURRENT_MODE == 5:
+            pokeZone.timer()
         for event in pygame.event.get():
             ##print event
             if event.type == pygame.QUIT:
@@ -113,6 +128,13 @@ def main():
                         ##print event.key
                         action = val
                         inputManager(main, menu, sMenu, intro, action, screen,pokeZone)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if cfg.CURRENT_MODE == 5:
+                    pokeZone.dispZone()
+            if event.type == pygame.MOUSEBUTTONUP:
+                if cfg.CURRENT_MODE == 5:
+                    pokeZone.dispZone()
+                    screen.blit(pygame.transform.rotate(screen, 90),(0,0))
         #if cfg.CURRENT_MODE == 0: menu.dispMenu()
         #elif cfg.CURRENT_MODE == 1: main.dexRBYRUN()
         #elif cfg.CURRENT_MODE == 3: sMenu.dispMenu()
@@ -121,15 +143,15 @@ def main():
                         
         ##print "current mode " + str(cfg.CURRENT_MODE)
         #GPIO
-                        
-        Button(25).when_pressed = inputManager(main, menu, sMenu, intro, "RIGHT", screen,pokeZone)
-        Button(24).when_pressed = inputManager(main, menu, sMenu, intro, "DOWN", screen,pokeZone)
-        Button(23).when_pressed = inputManager(main, menu, sMenu, intro, "LEFT", screen,pokeZone)
-        Button(22).when_pressed = inputManager(main, menu, sMenu, intro, "UP", screen,pokeZone)
-        Button(5).when_pressed = inputManager(main, menu, sMenu, intro, "A", screen,pokeZone)
-        Button(12).when_pressed = inputManager(main, menu, sMenu, intro, "B", screen,pokeZone) 
+        
+        #Button(25).when_pressed = inputManager(main, menu, sMenu, intro, "RIGHT", screen,pokeZone)
+        #Button(24).when_pressed = inputManager(main, menu, sMenu, intro, "DOWN", screen,pokeZone)
+        #Button(23).when_pressed = inputManager(main, menu, sMenu, intro, "LEFT", screen,pokeZone)
+        #Button(22).when_pressed = inputManager(main, menu, sMenu, intro, "UP", screen,pokeZone)
+        #Button(5).when_pressed = inputManager(main, menu, sMenu, intro, "A", screen,pokeZone)
+        #Button(12).when_pressed = inputManager(main, menu, sMenu, intro, "B", screen,pokeZone) 
                 
-        led.on()
+        #led.on()
         pygame.display.flip()
 
     #gameLoop(main)
@@ -155,7 +177,7 @@ def inputManager(main, menu, sMenu, intro, action, screen,pokeZone): #scn,
     elif cfg.CURRENT_MODE == 5: pokeZone.dispZone()
 
     #make sure to uncomment for screen flipping
-    #screen.blit(pygame.transform.rotate(screen, 90),(0,0))
+    screen.blit(pygame.transform.rotate(screen, 90),(0,0))
 
 def addMon(num, caught):
     lines = {}

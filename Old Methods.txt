@@ -75,6 +75,10 @@ class dataCleaner():
                 print temp
                 writer.writerow(temp)
 
+            #print("This num " + str(LOCATION[1]) + " is type "+str(type(LOCATION[1]))+" and an int?")
+            #print("does " +str(type(int(float(LOCATION[1]))))+  str(LOCATION[1]) + " equal it's int form " +str(int(float(LOCATION[1]))))
+            #print(float(LOCATION[1]) == float(int(LOCATION[1])))
+            print(LOCATION[1] == int(float(LOCATION[1])))4
 
 move func
 - random chance anything happens
