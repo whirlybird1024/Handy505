@@ -59,17 +59,20 @@ class zoneScreen():
         global COUNT
 
         COUNT += 1
+        #if(pygame.mixer.get_busy() != 0):
+            #print "is the mixer busy: " + str(pygame.mixer.get_busy())
+        
         if(COUNT >= 100):
             COUNT = 0
             ITER += 1
-            self.timerEvents()
+            self.timerEvents(ITER)
             #print("Current Iter: " + str(ITER))
             if(ITER >= 10):
                 ITER = 0
 
         #self.timerEvents()
 
-    def timerEvents(self):
+    def timerEvents(self,itr):
         behave = self.behave
         screen = self.screen
         #print("Moving:" + str(MOVING))
@@ -77,6 +80,11 @@ class zoneScreen():
             behave.moving()
             self.dispZone()
             screen.blit(pygame.transform.rotate(screen, 90),(0,0))
+        else:
+            if(itr == 5):
+                shouldMove = random.randint(0, 2)
+                if(shouldMove == 1):
+                    behave.movement(0)
 
     def dispZone(self):
         font = self.font
@@ -84,7 +92,7 @@ class zoneScreen():
         data = self.data
         behave = self.behave
         
-        zoneBG = pygame.image.load("pics/zone/pokezone.png")
+        zoneBG = pygame.image.load("pics\zone\pokezone.png")
         zoneBG = pygame.transform.scale(zoneBG, SCREEN)
         screen.fill((248,232,248))
         screen.blit(zoneBG, (0,0))
@@ -92,25 +100,25 @@ class zoneScreen():
         NAME = data.getName()
         CLASS = data.getClass()
 
-        PokeSheet = spritesheet.spritesheet("pics/zone/" + MON + ".png")
+        PokeSheet = spritesheet.spritesheet("pics\zone\\" + MON + ".png")
         PokeSprite = PokeSheet.image_at((SPRX * CELLX, SPRY * CELLY, CELLX, CELLY),colorkey=(255, 255, 255))
         PokeSprite = pygame.transform.scale(PokeSprite, (ZONEX*2,ZONEY*2))
         screen.blit(PokeSprite, (LOCATION[0]*ZONEX,LOCATION[1]*ZONEY))
 
         if(IMGMODE == True):
-            imgScreen = pygame.image.load("pics/zone/" + MON + "Face.png")
+            imgScreen = pygame.image.load("pics\zone\\" + MON + "Face.png")
             imgScreen = pygame.transform.scale(imgScreen, (154,154))
             screen.blit(imgScreen, (160,160))
-            print("face")
+            #print("face")
 
             
             if(pygame.mouse.get_pressed() == (1, 0, 0)):
-                print("pet")
-                imgScreen = pygame.image.load("pics/zone/" + MON + "Pet.png")
+                #print("pet")
+                imgScreen = pygame.image.load("pics\zone\\" + MON + "Pet.png")
                 imgScreen = pygame.transform.scale(imgScreen, (154,154))
                 screen.blit(imgScreen, (160,160))
-                soundFile = 'sound/criesRBY/'+str(NUM)+".wav"
-                screen.blit(pygame.transform.rotate(screen, 90),(0,0))
+                soundFile = 'sound\criesRBY\\'+str(NUM)+".wav"
+                #screen.blit(pygame.transform.rotate(screen, 90),(0,0))
                 if(path.exists(soundFile)):
                     pygame.mixer.music.load(soundFile)
                     pygame.mixer.music.set_volume(cfg.VOLUME)
@@ -156,40 +164,35 @@ class MonBehavior():
     def movement(self,d):
         global ORIENT
         global MOVING
-        global SPRX
-        global SPRY
-
+        
         checkMap = self.checkMap 
         
-        #direct = random.randint(0,3)
-        direct = d
+        direct = random.randint(0,3)
+        #direct = d
 
         print("randirection: " + str(direct))
 
         if(direct == 0):
-            SPRX = 0
-            SPRY = 0
+            
+            print "Loc: "+str(LOCATION)
             if(checkMap(LOCATION[0],LOCATION[1]-1) == 0):
                 ORIENT =  direct
                 MOVING = True
             else: print("dangerZone")
         elif(direct == 1):
-            SPRX = 1
-            SPRY = 2
+            
             if(checkMap(LOCATION[0]+1,LOCATION[1]) == 0):
                 ORIENT =  direct
                 MOVING = True
             else: print("dangerZone")
         elif(direct == 2):
-            SPRX = 0
-            SPRY = 2
+            
             if(checkMap(LOCATION[0],LOCATION[1]+1) == 0):
                 ORIENT =  direct
                 MOVING = True
             else: print("dangerZone")
         elif(direct == 3):
-            SPRX = 1
-            SPRY = 0
+            
             if(checkMap(LOCATION[0]-1,LOCATION[1]) == 0):
                 ORIENT =  direct
                 MOVING = True
@@ -204,9 +207,14 @@ class MonBehavior():
     def moving(self):
         global LOCATION
         global MOVING
+        global SPRX
+        global SPRY
+        anim = self.anim
+
         
         if(ORIENT == 0):
-            
+            SPRX = 0
+            SPRY = 0 + anim((LOCATION[1] % 1))
             LOCATION[1] = LOCATION[1] - 0.1
             #LOCATION[1] = LOCATION[1] - (1/(COUNT/1000))
             LOCATION[1] = "%.1f" % LOCATION[1]
@@ -215,6 +223,8 @@ class MonBehavior():
                 MOVING = False
             #LOCATION[1] = LOCATION[1] - (1/(COUNT/1000))
         if(ORIENT == 2):
+            SPRX = 0
+            SPRY = 2 + anim((LOCATION[1] % 1))
             LOCATION[1] += .1
             LOCATION[1] = "%.1f" % LOCATION[1]
             LOCATION[1] = float(LOCATION[1])
@@ -223,6 +233,8 @@ class MonBehavior():
                 MOVING = False
 
         if(ORIENT == 1):
+            SPRX = 1
+            SPRY = 2 + anim((LOCATION[0] % 1))
             LOCATION[0] += .1
             LOCATION[0] = "%.1f" % LOCATION[0]
             LOCATION[0] = float(LOCATION[0])
@@ -231,12 +243,26 @@ class MonBehavior():
                 MOVING = False
 
         if(ORIENT == 3):
+            SPRX = 1
+            SPRY = 0 + anim((LOCATION[0] % 1))
             LOCATION[0] -= .1
             LOCATION[0] = "%.1f" % LOCATION[0]
             LOCATION[0] = float(LOCATION[0])
             
             if(LOCATION[0].is_integer()):
                 MOVING = False
+
+    def anim(self, loc):
+        loc = loc *10
+        if(loc < 3):
+            return 1
+        if(loc > 3 and loc <= 6):
+            return 0
+        if(loc > 6 and loc < 9):
+            return 1
+        if(loc >= 9):
+            return 0
+        
 
     def checkMap(self,x,y):
         global LOCATION
@@ -258,12 +284,12 @@ class DataRead():
 
         global MAP
         
-        with open('csv/dexHolder.csv') as csvfile:
+        with open('csv\dexHolder.csv') as csvfile:
             self.ownData = csv.DictReader(csvfile)
             for row in self.ownData:
                 self.holder = row
 
-        mapData = open('csv/maps/eeveeZone.csv')
+        mapData = open('csv\maps\eeveeZone.csv')
         MAP = np.loadtxt(mapData, delimiter=",")
         print(MAP)
 

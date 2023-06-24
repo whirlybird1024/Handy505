@@ -147,8 +147,9 @@ class DataRead():
 
 
     def getEntry(self, num):
-        ##totalData = len(self.lines)
-        ##print "Data Length: "  + str(totalData)
+        totalData = len(self.lines)
+        print "Data Length: "  + str(totalData)
+        print "Current Num: " + str(num)
         return self.lines[num]
 
     def getSpecies(self,num):
@@ -405,7 +406,7 @@ class RenderMenu():
                 if(position < 6):
                     position += 1
                 else:
-                    if(topEntry < 151):
+                    if(topEntry < 144):
                         topEntry += 1
             else:
                 if(self.subPosition < 3):

@@ -131,6 +131,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if cfg.CURRENT_MODE == 5:
                     pokeZone.dispZone()
+                    screen.blit(pygame.transform.rotate(screen, 90),(0,0))
             if event.type == pygame.MOUSEBUTTONUP:
                 if cfg.CURRENT_MODE == 5:
                     pokeZone.dispZone()
